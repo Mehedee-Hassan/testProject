@@ -1,0 +1,342 @@
+html {
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+body {
+    margin: 10;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+    display: block;
+}
+
+body .div-body-frame{
+
+    border-color: #000000;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 5px;
+    margin: 0 auto;
+    padding: 0;
+    overflow: visible;
+    position: relative;
+
+}
+
+
+body .div-body-frame .div-left-section {
+    border-color: #000000;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 5px;
+    width: 15%;
+    margin: 5%;
+    padding: 1%;
+    position: absolute;
+}
+
+
+
+body .div-body-frame .div-right-form {
+    border-color: #000000;
+    margin-left: 0%;
+    margin-right: 10%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    padding: 10px;
+    float: right;
+    position: relative;
+    width: 69%;
+    height: 100%;
+}
+
+body .div-body-frame .div-right-form-list{
+    /*border-color: #000000;*/
+    /*border-style: solid;*/
+    /*border-width: thin;*/
+    /*border-radius: 5px;*/
+    margin: 0;
+    padding: 0px;
+    float: left;
+    position: relative;
+    width: 60%;
+}
+
+body .div-body-frame .div-right-description{
+    border-color: #000000;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 5px;
+    margin: 2%px;
+    float: right;
+    position: relative;
+
+    width: 38%;
+    height: 100%;
+}
+
+body .div-right-description{
+    padding-top: 10%;
+    padding-left: 2px;
+    padding-right: 0%;
+    padding-bottom: 10%;
+    margin-bottom: 10%;
+    margin-top: 10%;
+}
+
+body .div-body-frame .div-description-section-body{
+    border-color: #000000;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 5px;
+    margin: 2%;
+    padding: 5%;
+    float: right;
+    position: relative;
+}
+
+
+#button-import ,#button-list, #button-data{
+
+    height: 40px;
+
+
+    border-bottom-color:#333;
+    border:1px solid #61c4ea;
+
+    background-color: lightgray;
+
+    /*background-color:#7cceee;*/
+    /*when clicked*/
+
+    color:#333;
+    text-align: center;
+    padding:5px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    padding-top:15% ;
+    font-weight: 700;
+
+
+    cursor: pointer;
+    
+    -webkit-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+    -moz-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+    box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+    text-shadow:#b2e2f5 0 1px 0;
+
+
+}
+
+#button-import:hover ,#button-list:hover,
+#button-data:hover{
+
+    height: 40px;
+
+
+    border-bottom-color:#333;
+    border:1px solid #080808;
+
+    background-color: #00b3ee;
+
+    /*background-color:#7cceee;*/
+    /*when clicked*/
+
+    color:#333;
+    text-align: center;
+    padding:5px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    padding-top:15% ;
+    font-weight: 700;
+
+
+    cursor: pointer;
+
+    -webkit-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+    -moz-box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+    box-shadow:rgba(0,0,0,0.2) 0 1px 0 0;
+    text-shadow:#b2e2f5 0 1px 0;
+
+
+}
+
+.div-right-section{
+    width: 75%;
+    padding: 5%;
+}
+
+.form-button-section{
+    padding-left: 52%;
+    position: absolute;
+    margin-top: 5%;
+}
+
+
+
+.form-button-section button {
+
+    width: 100px;
+    padding: 5px;
+    font-size: 18px;
+    background: #ccc;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+
+.form-button-section input[type=submit] {
+
+    width: 100px;
+    padding: 5px;
+    font-size: 18px;
+    background:#2ca02c;
+    border:0 none;
+    cursor:pointer;
+
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+
+
+
+.custom-file-upload{
+    padding-left:0%;
+    padding-right:0% ;
+    margin-right: 30%;
+}
+
+.file-input-field{
+    width: 400px;
+    border-width: 1px;
+    border:solid;
+    border-color: lightgray;
+    background-color: #ffffff;
+    padding-left: 0%;
+    overflow: hidden;
+    float:left;
+    position: relative;
+    margin-top: 0%;
+    margin-bottom: 2%;
+    margin-left:27%;
+}
+
+.custom-form-label  {
+    position: absolute;
+    margin-left: 20%;
+    margin-top: 1%;
+    margin-right: 0%;
+}
+
+.button-browse{
+
+    width: 100px;
+    margin-right: 0;
+    padding: 5px;
+    background: #ccc;
+    border:0 none;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    position: relative;
+    float:right;
+    text-align: center;
+    cursor: pointer;
+
+}
+
+.button-browse span{
+ cursor: pointer;
+}
+
+.file-input-field .file-path {
+    width: 290px;
+    overflow: hidden;
+    float : left;
+    padding-top: 1.5%;
+    overflow: hidden;
+
+}
+
+
+.list-box {
+    border: solid;
+    border-color:lightgray;
+    border-width: 1px;
+    padding: 0px;
+    position: relative;
+}
+
+.list-box1 {
+    border: solid;
+    border-color:lightgray;
+    border-width: 1px;
+    padding: 0px;
+    position: relative;
+
+}
+
+.list-box2 {
+    border: solid;
+    border-color:lightgray;
+    border-width: 1px;
+    padding: 0px;
+    position: relative;
+}
+
+.list-box3 {
+    border: solid;
+    border-color:lightgray;
+    border-width: 1px;
+    padding: 0px;
+    position: relative;
+}
+
+li{
+
+
+    border:1px solid #080808;
+    padding: 0px;
+    cursor: pointer;
+    list-style: none;
+}
+
+
+.show-csv-button-section .button-submit ,.button-cancel {
+
+    /*width: 100px;*/
+    padding: 5px;
+    font-size: 18px;
+    margin-left: 2% ;
+    border:0 none;
+    cursor:pointer;
+
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+.show-csv-button-section .button-submit {
+    background: #2ca02c;
+}
+
+.show-csv-button-section .button-cancel {
+    background: lightgray;
+}
+
