@@ -1,12 +1,16 @@
 commands :
+----------
 php aritsan serve
 
 
 project home page URL : http://localhost:8000/articles
-
+------------------------------------------------------
 
 csv data format:
+----------------
 keep empty same tree data ,that is relational same typte of data field should be kept empty.
 
-=>sample data shows the formation vs given data 
+
+=>"sample data/input data" shows the formation vs "given data"
+=>browse "sample data/input data" and upload to check
 
