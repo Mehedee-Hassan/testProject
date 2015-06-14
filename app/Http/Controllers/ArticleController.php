@@ -7,51 +7,247 @@ use Input;
 use Request;
 use File;
 use League\Csv\Reader;
+use App;
+use App\CustomClass\DatabaseHelper;
 
 
-class ArticleController extends Controller {
+class ArticleController extends Controller
+{
 
 
-    public function index(){
+    public function index()
+    {
         return view('articles.create');
     }
 
 
-    public function create(){
+    public function create()
+    {
         return view('articles.create');
     }
 
 
-    public function listout(){
+    public function searchDescription()
+    {
+        $textData = array();
+
+
+        $getData = Input::get('search_tree');
+
+
+
+
+        $i = 0;
+
+        foreach($getData as $data){
+            if(!empty($data))
+            $textData[$i++] = trim($data);
+            else
+                $textData[$i++] = "";
+        }
+
+
+
+        $retString = "";
+        $ret="";
+
+        if(!empty($textData[3])){
+            $ret = App\CsvValue::select('work_activity_description')->where('industry_name',($textData[3]))
+                ->where('trade_name',($textData[2]))->where('process_name',($textData[1]))
+                ->where('work_activity_name',($textData[0]))->first();
+
+
+            $retString = $ret['work_activity_description'];
+
+        }
+        else if(!empty($textData[2])){
+            $ret = App\CsvValue::select('process_description')->where('industry_name',($textData[2]))
+                ->where('trade_name',($textData[1]))->where('process_name',($textData[0]))
+                ->first();
+
+
+            $retString = $ret['process_description'];
+        }
+        else if(!empty($textData[1])){
+
+            $ret = App\CsvValue::select('trade_description')->where('industry_name',($textData[1]))
+                ->where('trade_name',($textData[0]))->first();
+            $retString = $ret['trade_description'];
+        }
+        else if(!empty($textData[0])){
+
+            $ret = App\CsvValue::select('industry_description')->where('industry_name',($textData[0]))
+                ->first();
+
+            $retString = $ret['industry_description'];
+        }
+
+
+
+
+
+    $retString = "<fieldset><legend>Description</legend>".$retString."</fieldset>";
+
+
+        return $retString;
+    }
+
+    //todo rename
+    public function test()
+    {
+
+        $listName = Input::get('list_name');
+
+
+        $value = App\ProcessList::where('list_name', $listName)->distinct()->get(array('process'))->toArray();
+
+        $html = "";
+
+        foreach ($value as $k => $v) {
+
+            $colls = App\ProcessList::where('process', $v['process'])->distinct()->get(array('work_activity'))->toArray();
+
+            $html .= "<li class='list-arrow'>" . $v['process'] . "<ul>";
+            foreach ($colls as $coll) {
+
+//                var_dump($coll['work_activity']);
+                $html .= "<li>" . $coll['work_activity'] . "</li>";
+
+            }
+            $html .= "</ul></li>";
+
+        }
+
+
+
+        return $html;
+
+
+    }
+
+
+    public function listout()
+    {
 
         $all = Input::all();
 //        var_dump($all);
 
-//        return view('articles.list');
+
+        $html = "";
+        $booleanData = true;
+        $if_the_first_one = true;
+
+
+        $indexForOnlyCheckBox = 0;
+        $totalDataElements = count($all) - 2;//for token and listname
+
+
+        $listName = $all['__form_generated_name__'];
+
+
+        foreach ($all as $key => $data) {
+
+            $newList = new App\ProcessList();
+
+            $getParent = explode('_', $key);
+
+
+
+            if (!empty($getParent[1])) {
+
+
+                //database interaction
+                $oldParent = $data;
+                //====================
+
+                if ($if_the_first_one == true) {
+
+                    $if_the_first_one = false;
+                } else {
+                    $html .= "</ul></li>";
+                }
+
+                $html .= "<li>$data<ul>";
+                $getParent = false;
+            } else {
+
+                if ($booleanData == false) {
+                    $html .= "</ul>";
+                    $getParent = true;
+                }
+
+
+                //database interaction
+                $newList->process = $oldParent;
+                $newList->work_activity = $data;
+                //====================
+
+                $html .= "<li>$data</li>";
+
+
+                $newList->list_name = $listName;
+
+
+
+                $newList->save();
+            }
+
+
+            if (++$indexForOnlyCheckBox > $totalDataElements)
+                break;
+
+
+        }
+
+
+
+
+        $sendData = App\ProcessList::all()->toArray();
+
+
+        //todo make final //code experiment
+
+        $getListNames =App\ProcessList::distinct()->get(array('list_name'))->toArray();
+
+
+        $html2 = "<ul>";
+
+        foreach ($getListNames as $listName) {
+            $html2 .= "<li>" . $listName['list_name'] . "</li>";
+        }
+
+        $html2 .= "</ul>";
+
+
+        return view('articles.showList')->with(['data' => $sendData, 'html2' => $html2]);
+
     }
+
+
+
+
+
+
+
+
+
 
 
     public function uploadFile()
     {
-
-//        $allInput = Request::get('title');
-
-
-//        $getFile = Request::get('csvfile');
 
         $uploadedFile = Input::file('csvfile');
         $fileUploadPath = 'uploads/csv/';
         $tempUploadedFileName = 'tmp.csv';
 
 
-        if($uploadedFile->isValid() &&
-            ($uploadedFile->getClientOriginalExtension() == 'CSV'||
-                $uploadedFile->getClientOriginalExtension() == 'csv')) {
+        if ($uploadedFile->isValid() &&
+            ($uploadedFile->getClientOriginalExtension() == 'CSV' ||
+                $uploadedFile->getClientOriginalExtension() == 'csv')
+        ) {
 
 
-            $uploadedFile->move($fileUploadPath , $tempUploadedFileName);
-
-
+            $uploadedFile->move($fileUploadPath, $tempUploadedFileName);
 
 
             $fileInfo['extension'] = $uploadedFile->getClientOriginalExtension();
@@ -62,149 +258,93 @@ class ArticleController extends Controller {
 
 //            echo 'Title :'.$allInput.'\n';
 
-            $fullPath = $fileUploadPath.$tempUploadedFileName;
-
+            $fullPath = $fileUploadPath . $tempUploadedFileName;
             $csvReader = Reader::createFromPath($fullPath);
             $getAllData = $csvReader->fetchAll();
 
-            $tagClodes1 = false ;
-            $tagClodes2 = false ;
-            $tagClodes3 = false ;
-            $tagClodes4 = false ;
 
-//            var_dump($getAllData);
+            $databaseHelper = new App\CustomClass\DatabaseHelper();
 
-            $html = "<ul>";
-//            for($i = 0; $i< count($getAllData); $i++) {
-
-                for ($j = 1; $j < count($getAllData); $j++) {
-//                    $html .= "<li class='li-style-li'>";
-                    if (empty($getAllData[$j][0])) {
-
-                        if (empty($getAllData[$j][3])) {
+            $databaseHelper->saveCSVToHtml($getAllData);
+            $html5 = $databaseHelper->htmlFromDatabase();
 
 
-                            if (empty($getAllData[$j][6])) {
+            return view('articles.show_csv_options')->with('allCsvData', $html5);
+        }
 
-                                if (!empty($getAllData[$j][9]))
-                                    $html .= "<li><input type='checkbox' value='".$getAllData[$j][9]."'/>"
-                                                        . $getAllData[$j][9] . "</li>";
-
-
-                            } else {
-                                $html .= "</ul></li>";
-                                $html .= "<li><input type='checkbox' value='".$getAllData[$j][6]."'/>"
-                                    .$getAllData[$j][6];
-
-                                if (empty($getAllData[$j][9])) {
-
-                                } else {
-                                    $html .= '<ul>';
-                                    $html .= "<li><input type='checkbox' value='".$getAllData[$j][9]."'/>"
-                                        . $getAllData[$j][9] . "</li>";
-                                }
-                            }
-
-
-//                            $html .= "<li>" . $getAllData[$j][2] . "</li>";
-
-                        } else {
-                            $html .= "</ul></li></ul></li>";
-                            $html .= "<li>" . $getAllData[$j][3];
-
-                            if (empty($getAllData[$j][6])) {
-
-                            } else {
-                                $html .= '<ul>';
-                                $html .= "<li><input type='checkbox' value='".$getAllData[$j][6]."'/>"
-                                    .$getAllData[$j][6];
-                                }
-
-                            if (empty($getAllData[$j][9])) {
-
-                            } else {
-                                $html .= '<ul>';
-                                $html .= "<li><input type='checkbox' value='".$getAllData[$j][9]."'/>"
-                                    . $getAllData[$j][9];
-                            }
-
-
-                            }
-                        }
-                     else {
-
-                        //new if 0 not empty close tags
-                         //todo change logic to if($j != 0)
-
-                         if (!empty($getAllData[$j][0])) {
-
-//old logic
-
-                             if($j != 1)
-                                 $html .= "</ul></li></ul></li></ul></li>";
-
-                             $html .= "<li>".$getAllData[$j][0];//=> <li>L
-
-
-                         }
-                         //todo end ========
-
-
-                         if (empty($getAllData[$j][3])) {//0 not emp so 1 is not emp
-
-//                             $html .= "<li>" . $getAllData[$j][2] . "</li>";
-
-
-                         } else {
-                             if (empty($getAllData[$j][0])) {
-                                 $html .= "</ul></li>";
-                             }
-                             else if (!empty($getAllData[$j][0]))//ul deleted
-                                $html .= "<ul><li>" . $getAllData[$j][3];
-
-                             if (empty($getAllData[$j][6])) {
-
-                             } else {
-
-
-                                 $html .= '<ul>';
-                                 $html .= "<li><input type='checkbox' value='".$getAllData[$j][6]."'/>"
-                                     . $getAllData[$j][6];
-                             }
-                             if (empty($getAllData[$j][9])) {
-
-                             } else {
-
-
-                                 $html .= '<ul>';
-                                 $html .= "<li><input type='checkbox' value='".$getAllData[$j][9]."'/>"
-                                     . $getAllData[$j][9]."</li>";
-                             }
-
-
-                         }
-
-
-                         //=================================
-
-                       //old
-
-                    }
-
-                }
-                }
-//            $html .= "</ul>";
-//            }
-
-//            echo "here======";
-//
-//                    var_dump($html);
-//            echo "here======";
-            return view('articles.show_csv_options')->with('allCsvData',$html);
-            }
 
     }
-    
+
+
+    public function showOnlyList()
+    {
+
+
+        $getListNames =App\ProcessList::distinct()->get(array('list_name'))->toArray();
+
+
+        $html2 = "<ul>";
+
+        foreach ($getListNames as $listName) {
+            $html2 .= "<li>" . $listName['list_name'] . "</li>";
+        }
+
+        $html2 .= "</ul>";
+
+
+        return view('articles.showList')->with('html2' , $html2);
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //dummy test;
 
 //    public function about(){

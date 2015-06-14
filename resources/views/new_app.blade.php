@@ -4,7 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
+    <meta name="_token" content="{!! csrf_token() !!}"/>
+
+
+
+    <title>List Maker</title>
 
     <link href="{{ asset('/css/listAppCustom.css') }}" rel="stylesheet">
 
@@ -41,10 +45,14 @@
             @yield('right_form_section')
 
 
+            @yield('animated_List_Details_Section')
 
 
     </div>
     @yield('content')
+
+
+    @yield('dummy_section')
 </div>
 
 <!-- Scripts -->
@@ -54,8 +62,14 @@
 <script src="{{ asset('/js/lib/papa.min.js') }}"></script>
 <script src="{{ asset('/js/lib/jquery.json.min.js')}}"></script>
 
+
 @yield('custom_scripts')
 
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
+        });
+    </script>
 
 
 </body>

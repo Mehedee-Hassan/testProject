@@ -5,7 +5,7 @@
 
 
     <div name="button-import" id="button-import"> Import </div>
-    <div name="button-data" id="button-data" > Data </div>
+    <div name="button-data" id="button-data" style="background-color: #00b3ee"> Data </div>
     <div name="button-list" id="button-list" > List </div>
 
 
@@ -14,50 +14,46 @@
 @section('right_form_section')
 
     <div class="div-right-form-list">
+     <form id="checboxlist-form" action = "/articles/list" method="post">
 
-        {!! Form::open(
-        array(
-        'action' => 'ArticleController@listout',
-        'method' => 'post',
-        'id'=>'checboxlist-form'
-        )) !!}
-
-           {{--{{ var_dump($allCsvData) }}--}}
-        <ul>
             {!! $allCsvData !!}
-        </ul>
+
+            <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
+            <input type="hidden" name="__form_generated_name__" id="__form_generated_name__" value="list"/>
+      </form>
     </div>
 
     <div class="show-csv-button-section">
-        <input type="button" class="button-submit" value="Generate List"/>
+        <input type="submit" form="checboxlist-form" class="button-submit" value="Generate List"/>
         <input type="button" class="button-cancel" value="Cancel"/>
     </div>
 
-    {!! Form::close() !!}
+
 @endsection
 
 @section('right_description_section')
 
-    <div class="div-right-description">
-        this is des
-    </div>
+
+        <div class="div-right-description" id="div-right-description">
+        </div>
+
+
+
 @endsection
-sfgsdfg
-<div id="result1" name="result1">
-dfg
-</div>
+
+@section('dummy_section')
+    {{--<form id="hidden_list" action = "/articles/list_show_only" method="post">--}}
+        {{--<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />--}}
+        {{--<input type="hidden" name="" id="" value=""/>--}}
+        {{--<input type="submit" form="" class="" value=""/>--}}
+    {{--</form>--}}
+    @endsection
+
 @section('custom_scripts')
     <script src="{{ asset('/js/csv_parse.js') }}"></script>
     <script src="{{ asset('/js/lib/papa.min.js') }}"></script>
+
 @endsection
 
 @stop
 
-
-{{--@for( $j = 0 ; $j < count($allCsvData[0]) ; $j++)--}}
-    {{--@if($allCsvData[$j][0] == $allCsvData[$i][0])--}}
-        {{--@for( $k = 0 ; $k < count($allCsvData[$i]) ; $k++)--}}
-
-        {{--@endfor--}}
-    {{--@endif--}}
-{{--@endfor--}}

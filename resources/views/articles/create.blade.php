@@ -6,7 +6,7 @@
 
 
 
-    <div name="button-import" id="button-import"> Import </div>
+    <div name="button-import" id="button-import" style="background-color: #00b3ee"> Import </div>
     <div name="button-data" id="button-data" > Data </div>
     <div name="button-list" id="button-list" disabled>  </div>
 
@@ -16,7 +16,6 @@
 @section('right_form_section')
 
 
-    <hr/>
 
     {!! Form::open(
     array(
@@ -37,7 +36,7 @@
             )) !!}
 
 
-            <div class="custom-form-label">{!! Form::label('file','Name:' ) !!}</div>
+            <div class="custom-form-label">{!! Form::label('file','Name' ) !!}</div>
             <div class="file-input-field">
 
                 <div class="file-path"></div>

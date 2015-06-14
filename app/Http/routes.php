@@ -12,9 +12,20 @@
 */
 
 
-	Route::get('about','PagesController@about');
-	Route::get('contact','PagesController@contact');
+
 	Route::get('articles','ArticleController@index');
 	Route::get('articles/create','ArticleController@create');
     Route::post('articles/uploadFile','ArticleController@uploadFile');
     Route::post('articles/list','ArticleController@listout');
+
+    Route::get('articles/test','ArticleController@test');
+    Route::post('articles/test/','ArticleController@test');
+
+
+    Route::get('articles/searchDescription','ArticleController@searchDescription');
+    Route::post('articles/searchDescription/','ArticleController@searchDescription');
+
+    Route::get('articles/list_show_only','ArticleController@showOnlyList');
+    Route::post('articles/list_show_only/','ArticleController@showOnlyList');
+
+
