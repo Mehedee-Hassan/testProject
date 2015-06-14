@@ -4,7 +4,8 @@
 @section('left_button_section')
 
 
-    <div name="button-import" id="button-import"> <a href="{{ URL::action('ArticleController@create') }}">Import </a></div>
+    <a href="{{ URL::action('ArticleController@create') }}">
+        <div name="button-import" id="button-import"> Import </div></a>
     <div name="button-data" id="button-data" style="background-color: #00b3ee"> Data </div>
     <div name="button-list" id="button-list" > List </div>
 
