@@ -16,7 +16,7 @@ var bigData;
 
     $('#button-list').on("click",function(){
 
-        alert('list');
+        //alert('list');
         //showOnlyList();
     });
 
@@ -33,8 +33,8 @@ var bigData;
                 e.preventDefault();
             else if(listName == ""){
 
-                //alert("\t\tSorry !!\n\n List Name Required.");
-                //e.preventDefault();
+                alert("\t\tSorry !!\n\n List Name Required.");
+                e.preventDefault();
 
             }
 
@@ -50,7 +50,7 @@ var bigData;
             //    allVals.push($(this).val());
             //});
 
-            alert(allVals + "===" + formURL);
+            //alert(allVals + "===" + formURL);
             //});
 
         if(allVals != "" && (text != null || text == true)) {
@@ -61,6 +61,12 @@ var bigData;
 
 
     });
+
+    $(".show-csv-button-section").on("click",".button-cancel",function(){
+        $(".div-right-form-list input[type=checkbox]").prop('checked', false);
+    });
+
+
     $("#button-data").on("click",function(){
 
         $(".div-right-form").html(fullHTML)
@@ -79,6 +85,8 @@ var bigData;
 
         $('li')
             .click(function(e){
+
+
 
                 //
                 //if(this == e.taget){
@@ -132,21 +140,20 @@ var bigData;
     //});
 
 
-  $(".div-right-form-list").find("a").on("click",function(e){
 
-        if(e.target != this)
-         return;
-
-
-        e.preventDefault();
-
-    });
 
 
 
 
     $('input[type=checkbox]').on("change",function (e) {
         //alert("here");
+
+        if(e.target != this){
+            return;
+        }
+        if(e.target == $(this).parent()){
+            return;
+        }
 
 
 
@@ -323,7 +330,7 @@ return returnData;
 
 
 function showOnlyList(){
-    $("#hidden_list input[type=submit]");
+    //$("#hidden_list input[type=submit]");
 }
 
 

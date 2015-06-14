@@ -1,0 +1,17 @@
+Industry name ,"	Industry description","	Industry tag ",Trade Name, trade description ,trade tag,process name,process description,process tag,work activity name,work des,work tag
+Construction,"	Construction is one of ","	construction ","Civil 	","Civil 	",structure;construction;,Preliminaries Work,Preliminaries Work,Preliminaries Work,Erection of temporary hoarding,Erection of temporary hoarding,a
+Construction,"	Construction is one of ","	construction ","Civil 	","Civil 	",structure;construction;,Preliminaries Work,Preliminaries Work,Preliminaries Work,Clear off vegetation,Clear off vegetation,a
+Construction,"	Construction is one of ","	construction ","Civil 	","Civil 	",structure;construction;,Preliminaries Work,Preliminaries Work,Preliminaries Work,Constructing temporary perimeter drain and silt trap,Constructing temporary perimeter drain and silt trap,a
+Construction,"	Construction is one of ","	construction ","Civil 	","Civil 	",structure;construction;,Formwork,Formwork,Formwork,Erection of Formwork,Erection of Formwork,a
+Construction,"	Construction is one of ","	construction ","Civil 	","Civil 	",structure;construction;,Formwork,Formwork,Formwork,Hoisting of Formwork,Hoisting of Formwork,a
+Construction,"	Construction is one of ","	construction ","Civil 	","Civil 	",structure;construction;,Formwork,Formwork,Formwork,Dismantle of Formwork ,Dismantle of Formwork ,a
+Construction,"	Construction is one of ","	construction ","Civil 	","Civil 	",structure;construction;,Reinforcement,Reinforcement,Reinforcement,Cut & Bend Reinforcement,Cut & Bend Reinforcement,a
+Construction,"	Construction is one of ","	construction ",Civil     ,Civil     ,structure;construction;,Concreting,Concreting,23,Hoisting of Reinforcement ,Hoisting of Reinforcement ,a
+Construction,"	Construction is one of ","	construction ",Civil     ,Civil     ,structure;construction;,Concreting,Concreting,t34,Hoisting of concrete using Cranes,Hoisting of concrete using Cranes,a
+Construction,"	Construction is one of ","	construction ",Archi ,Archi ,archi;construction;,kil,kil,dgfg,Pumping Concrete using Concrete pump,Pumping Concrete using Concrete pump,a
+Construction,"	Construction is one of ","	construction ",M & E ,M & E ,M and E;construction;,kl;;j,kl;;j,qrwe,we,we,a
+Agriculture,"	Agriculture workers are often","	Agriculture","Civil 	","Civil 	",structure;construction;,Formwork,Formwork,Formwork,Dismantle of Formwork ,Dismantle of Formwork ,a
+Service sector,Service sector,asd,"Civil 	","Civil 	",structure;construction;,Reinforcement,Reinforcement,Reinforcement,Cut & Bend Reinforcement,Cut & Bend Reinforcement,a
+Mining,Mining,"	mining",Civil     ,Civil     ,structure;construction;,Concreting,Concreting,uio,Hoisting of Reinforcement ,Hoisting of Reinforcement ,a
+oil & gas,oil & gas,"	oil and gas",Civil     ,Civil     ,structure;construction;,Concreting,Concreting,yui,Hoisting of concrete using Cranes,Hoisting of concrete using Cranes,a
+Healthcare,Healthcare,"	Healthcare",Archi ,Archi ,archi;construction;,dhdfg,dhdfg,yo,Pumping Concrete using Concrete pump,Pumping Concrete using Concrete pump,a

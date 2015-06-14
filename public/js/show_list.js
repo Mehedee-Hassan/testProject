@@ -72,6 +72,8 @@ var _CSRFToken = $('meta[name="_token"]').attr('content');
     });
 
 
+
+
     $('.list-details-change').on("click","li,span",function(e) {
 
 

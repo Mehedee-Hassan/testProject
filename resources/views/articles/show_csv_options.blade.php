@@ -4,7 +4,7 @@
 @section('left_button_section')
 
 
-    <div name="button-import" id="button-import"> Import </div>
+    <div name="button-import" id="button-import"> <a href="{{ URL::action('ArticleController@create') }}">Import </a></div>
     <div name="button-data" id="button-data" style="background-color: #00b3ee"> Data </div>
     <div name="button-list" id="button-list" > List </div>
 
@@ -25,7 +25,7 @@
 
     <div class="show-csv-button-section">
         <input type="submit" form="checboxlist-form" class="button-submit" value="Generate List"/>
-        <input type="button" class="button-cancel" value="Cancel"/>
+        <input type="button" class="button-cancel" value="Clear"/>
     </div>
 
 

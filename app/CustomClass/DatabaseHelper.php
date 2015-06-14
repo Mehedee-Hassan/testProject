@@ -117,7 +117,7 @@ class DatabaseHelper{
                 ->where('industry_name', $industry['industry_name'])->distinct()->get()->toArray();
 
 
-            $html5 .= "<li><a href='#'>" . $industry['industry_name'] . "</a><ul>";
+            $html5 .= "<li><a href='#div-right-descriptio'>" . $industry['industry_name'] . "</a><ul>";
 
             foreach ($tradeCol as $trade) {
                 $processCol = App\CsvValue::select('process_name')
@@ -125,7 +125,7 @@ class DatabaseHelper{
                     ->where('trade_name', $trade['trade_name'])
                     ->distinct()->get()->toArray();
 
-                $html5 .= "<li><a href='#'>" . $trade['trade_name'] . "</a><ul>";
+                $html5 .= "<li><a href='#div-right-descriptio'>" . $trade['trade_name'] . "</a><ul>";
                 foreach ($processCol as $process) {
                     $workCol = App\CsvValue::select('work_activity_name')
                         ->where('industry_name', $industry['industry_name'])
@@ -133,11 +133,11 @@ class DatabaseHelper{
                         ->where('process_name', $process['process_name'])
                         ->distinct()->get()->toArray();
 
-                    $html5 .= "<li><a href='#'><input name='" . $inputCheckBoxName++ . "_parent' type='checkbox' value='"
+                    $html5 .= "<li><a href='#div-right-descriptio'><input name='" . $inputCheckBoxName++ . "_parent' type='checkbox' value='"
                         . $process['process_name'] . "'>" . $process['process_name'] . "</a><ul>";
 
                     foreach ($workCol as $work) {
-                        $html5 .= "<li><a href='#'><input name='" . $inputCheckBoxName++ . "' type='checkbox' value='"
+                        $html5 .= "<li><a href='#div-right-descriptio'><input name='" . $inputCheckBoxName++ . "' type='checkbox' value='"
                             . $work['work_activity_name'] . "'/>" . $work['work_activity_name'] . "</a></li>";
                     }
                     $html5 .= "</ul></li>";

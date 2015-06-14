@@ -6,7 +6,7 @@
 
 
 
-    <div name="button-import" id="button-import"> Import </div>
+    <div name="button-import" id="button-import"> <a href="{{ URL::action('ArticleController@create') }}">Import </a></div>
     <div name="button-data" id="button-data" > Data </div>
     <div name="button-list" id="button-list" style="background-color: #00b3ee"> List </div>
 

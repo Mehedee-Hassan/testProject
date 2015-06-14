@@ -1,16 +1,13 @@
 commands :
 ----------
+php artisan migrate
 php aritsan serve
 
 
-project home page URL : http://localhost:8000/articles
+project home page URL : http://localhost:8000/articles/create
 ------------------------------------------------------
 
 csv data format:
 ----------------
-keep empty same tree data ,that is relational same typte of data field should be kept empty.
-
-
-=>"sample data/input data" shows the formation vs "given data"
-=>browse "sample data/input data" and upload to check
-
+-> please do not keep extra lines to the end of the file.
+-> please fill up each field .If empty set type "null"
