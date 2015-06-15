@@ -7,8 +7,12 @@
 
 
     <a href="{{ URL::action('ArticleController@create') }}">
-        <div name="button-import" id="button-import"> Import </div></a>
-    <div name="button-data" id="button-data" > Data </div>
+        <div name="button-import" id="button-import"> Import </div>
+    </a>
+
+    <a href="{{ URL::action('ArticleController@uploadFile') }}">
+        <div name="button-data" id="button-data" > Data </div>
+    </a>
     <div name="button-list" id="button-list" style="background-color: #00b3ee"> List </div>
 
 

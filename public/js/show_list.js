@@ -22,7 +22,7 @@ var _CSRFToken = $('meta[name="_token"]').attr('content');
 
         $.ajax({
             type: "post",
-            url: "/articles/test/",
+            url: "/articles/show_list/",
             data : { 'list_name' : datatosend},
 
             success: function (data) {

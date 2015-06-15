@@ -38,20 +38,48 @@ var bigData;
 
             }
 
+          while(checkIfListNameExists(listName) == true){
+
+
+
+                   e.preventDefault();
+
+
+                   alert('sorry!! list name exists\n\t  try new one');
+
+                   listName = prompt("Name:", "");
+
+
+
+                   if(listName == null){
+
+                          e.preventDefault();
+                            break;
+                      }
+                      else if(listName == ""){
+
+                          alert("\t\tSorry !!\n\n List Name Required.");
+                          e.preventDefault();
+                          break;
+                      }
+
+
+            }
+
+
+
+
+
+
+
             $('#__form_generated_name__').attr("value",listName);
 
 
             var postData = $(this).serializeArray();
             var formURL = $("#checboxlist-form").attr("action");
 
-            //$(".button-submit").on("click",function () {
             var allVals = [];
-            //$('input[type=checkbox]:checked').each(function () {
-            //    allVals.push($(this).val());
-            //});
 
-            //alert(allVals + "===" + formURL);
-            //});
 
         if(allVals != "" && (text != null || text == true)) {
 
@@ -63,7 +91,11 @@ var bigData;
     });
 
     $(".show-csv-button-section").on("click",".button-cancel",function(){
-        $(".div-right-form-list input[type=checkbox]").prop('checked', false);
+
+        $confirmVal = confirm("Deselect All !!!")
+        if($confirmVal)
+            $(".div-right-form-list input[type=checkbox]").prop('checked', false);
+
     });
 
 
@@ -73,13 +105,6 @@ var bigData;
         location.reload();
     });
 
-        //$("input[type='checkbox']").change(function(){
-        //
-        //   if(this.checked){
-        //       alert(aa);
-        //   }
-        //    alert("checke");
-        //});
 
 
 
@@ -128,17 +153,7 @@ var bigData;
 
 
 
-                //alert(ar[0]);
-                //}/
             });
-
-    //$('.div-right-form-list').find('a').on("click",function (e) {
-    //
-    //    if(e.target != this) return;
-    //        e.preventDefault();
-    //
-    //});
-
 
 
 
@@ -218,83 +233,6 @@ var bigData;
 
 
 
-function search2(find,bigdata){
-    var findDesCount = 0;
-    var booleanflag = false;
-
-    //alert("got == "+find);
-
-    for(var i = 1 ; i < bigdata.length ; i++){
-
-
-        booleanflag = false;
-
-            //alert(bigdata[i][1]);
-            //$(".div-right-description").html(bigdata[i][1]);
-
-
-
-        if( bigdata[i][0] != '') {
-
-            if(find == findDesCount){
-                //alert("found ="+find+" "+findDesCount);
-
-                $(".div-right-description").html(bigdata[i][1]);
-            break;
-            }
-           findDesCount++;
-        }
-
-
-        if(bigdata[i][3] != '') {
-
-            //alert("found =" + find + " " + findDesCount);
-            if(find == findDesCount){
-
-                //alert("found ="+find+" "+findDesCount);
-
-                $(".div-right-description").html(bigdata[i][4]);
-                break;
-               }
-            findDesCount++;
-        }
-
-
-        if(bigdata[i][6] != "") {
-
-            if(find == findDesCount) {
-
-                //alert("found =" + find + " " + findDesCount);
-
-                $(".div-right-description").html(bigdata[i][7]);
-            break;
-            }
-
-
-            findDesCount++;
-        }
-
-        if(bigdata[i][9] != "") {
-
-
-            if(find == findDesCount) {
-
-                //alert("found =" + find + " " + findDesCount);
-                $(".div-right-description").html(bigdata[i][10]);
-            break;
-            }
-            findDesCount++;
-        }
-
-        if(findDesCount == true){
-
-        }
-    }
-
-
-}
-
-
 
 
 function search(searchTree){
@@ -328,6 +266,38 @@ return returnData;
 
 
 
+function checkIfListNameExists(listName){
+
+
+    var ret ="false";
+
+    $.ajax({
+        type: "get",
+        url: "/articles/list_name_check/",
+        data : { 'list_name' : listName},
+        async: false,
+        success: function (data) {
+
+            //alert("|"+data+"|"+typeof(data));
+
+            ret = data.toString();
+
+
+        },
+        error: function () {
+            alert('Database connection error !!');
+        }
+    });
+
+
+    if(ret == "false")
+        return true;
+    else
+        return false;
+}
+
+
+
 
 function showOnlyList(){
     //$("#hidden_list input[type=submit]");
@@ -335,87 +305,3 @@ function showOnlyList(){
 
 
 
-
-
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//function processData(data,wantTosearch){
-//
-//    var result = $.csv.toArrays(data);
-//    var newObjectRes = $.toJSON($.csv.toObjects(data));
-//
-//    alert(newObjectRes);
-//
-//
-//
-//        //$("div-right-description").html("");
-//        //$(".div-right-description").append(s);
-//
-//
-//}
-//
-//function matchUntil(data,j){
-//
-//    for(var i = 0 ; i < data.lengh ; i ++){
-//        for(var j = 0 ; j < dara[i].length ; j ++){
-//
-//        }
-//    }
-//
-//
-//}
-//
-//function searchIn(result){
-//
-//    //demo function
-//    //todo need update
-//
-//
-//    var sFor;
-//
-//    for(var i = 0 ; i < result.length ; i++) {
-//
-//        if(result[i][0] == sFor[0] &&
-//            result[i][1] == sFor[1])
-//        {
-//            $("#right-description").html('');
-//            $("#right-description").html(result[i][2]);
-//        }
-//
-//    }
-//
-//
-//
-//}
-//
-//
-//
-//function makeList(result){
-//    //todo
-//    $("#result1").html();
-//
-//}
-//
-//
-//function papaParseEx(data){
-//
-//        alert('true'+data);
-//        var result = Papa.parse(data, {
-//
-//        });
-//
-//    alert(result.data);
-//
-//
-//
-//}

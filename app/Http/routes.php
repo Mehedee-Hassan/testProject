@@ -15,11 +15,18 @@
 
 	Route::get('articles','ArticleController@index');
 	Route::get('articles/create','ArticleController@create');
-    Route::post('articles/uploadFile','ArticleController@uploadFile');
-    Route::post('articles/list','ArticleController@listout');
 
-    Route::get('articles/test','ArticleController@test');
-    Route::post('articles/test/','ArticleController@test');
+    Route::post('articles/uploadFile','ArticleController@uploadFile');
+    Route::get('articles/uploadFile','ArticleController@uploadFile');
+
+    Route::post('articles/list/','ArticleController@listout');
+    Route::get('articles/list','ArticleController@listout');
+
+    Route::get('articles/list_name_check/','ArticleController@listNameCheck');
+    Route::get('articles/list_name_check','ArticleController@listNameCheck');
+
+    Route::get('articles/show_list','ArticleController@showListFromDBAjaxCall');
+    Route::post('articles/show_list/','ArticleController@showListFromDBAjaxCall');
 
 
     Route::get('articles/searchDescription','ArticleController@searchDescription');

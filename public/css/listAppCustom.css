@@ -13,7 +13,6 @@ figcaption,
 figure,
 footer,
 header,
-hgroup,
 main,
 menu,
 nav,
@@ -45,6 +44,7 @@ body .div-body-frame .div-left-section {
     margin: 5%;
     padding: 1%;
     position: absolute;
+    box-shadow: 2px 2px 3px grey;
 }
 
 

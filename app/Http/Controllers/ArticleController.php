@@ -9,6 +9,7 @@ use File;
 use League\Csv\Reader;
 use App;
 use App\CustomClass\DatabaseHelper;
+use App\CustomClass\HtmlGenerator;
 
 
 class ArticleController extends Controller
@@ -92,8 +93,11 @@ class ArticleController extends Controller
         return $retString;
     }
 
-    //todo rename
-    public function test()
+
+
+
+
+    public function showListFromDBAjaxCall()
     {
 
         $listName = Input::get('list_name');
@@ -101,22 +105,8 @@ class ArticleController extends Controller
 
         $value = App\ProcessList::where('list_name', $listName)->distinct()->get(array('process'))->toArray();
 
-        $html = "";
-
-        foreach ($value as $k => $v) {
-
-            $colls = App\ProcessList::where('process', $v['process'])->distinct()->get(array('work_activity'))->toArray();
-
-            $html .= "<li class='list-arrow'>" . $v['process'] . "<ul>";
-            foreach ($colls as $coll) {
-
-//                var_dump($coll['work_activity']);
-                $html .= "<li>" . $coll['work_activity'] . "</li>";
-
-            }
-            $html .= "</ul></li>";
-
-        }
+        $generatedHtml = new App\CustomClass\HtmlGenerator();
+        $html = $generatedHtml->htmlFromDatabaseFor_Test_RouteInArticleController($value);
 
 
 
@@ -126,13 +116,42 @@ class ArticleController extends Controller
     }
 
 
+    public function listNameCheck(){
+
+        $listNameForCheck = Input::get('list_name');
+        $ifExists = App\ProcessList::select('list_name')->where('list_name',$listNameForCheck)->first();
+
+
+        if(empty($ifExists)){
+
+            return "true";
+        }
+
+        return "false";
+
+    }
+
+
+
     public function listout()
     {
 
+
+
         $all = Input::all();
-//        var_dump($all);
+
+        $this->saveNewList($all);
+        $html2 = $this->showListHtmlCreator($all);
 
 
+
+
+        return view('articles.showList')->with('html2' , $html2);
+
+    }
+
+
+    public function saveNewList($all){
         $html = "";
         $booleanData = true;
         $if_the_first_one = true;
@@ -143,7 +162,7 @@ class ArticleController extends Controller
 
 
         $listName = $all['__form_generated_name__'];
-
+        $oldParent = "";
 
         foreach ($all as $key => $data) {
 
@@ -153,42 +172,15 @@ class ArticleController extends Controller
 
 
 
-            if (!empty($getParent[1])) {
-
-
-                //database interaction
+            if (!empty($getParent[1]))
+            {
                 $oldParent = $data;
-                //====================
+            }
+            else {
 
-                if ($if_the_first_one == true) {
-
-                    $if_the_first_one = false;
-                } else {
-                    $html .= "</ul></li>";
-                }
-
-                $html .= "<li>$data<ul>";
-                $getParent = false;
-            } else {
-
-                if ($booleanData == false) {
-                    $html .= "</ul>";
-                    $getParent = true;
-                }
-
-
-                //database interaction
                 $newList->process = $oldParent;
                 $newList->work_activity = $data;
-                //====================
-
-                $html .= "<li>$data</li>";
-
-
                 $newList->list_name = $listName;
-
-
-
                 $newList->save();
             }
 
@@ -199,34 +191,20 @@ class ArticleController extends Controller
 
         }
 
-
-
-
-        $sendData = App\ProcessList::all()->toArray();
-
-
-        //todo make final //code experiment
-
-        $getListNames =App\ProcessList::distinct()->get(array('list_name'))->toArray();
-
-
-        $html2 = "<ul>";
-
-        foreach ($getListNames as $listName) {
-            $html2 .= "<li>" . $listName['list_name'] . "</li>";
-        }
-
-        $html2 .= "</ul>";
-
-
-        return view('articles.showList')->with(['data' => $sendData, 'html2' => $html2]);
-
     }
 
 
 
+    public function showListHtmlCreator($all)
+    {
 
+        $getListNames =App\ProcessList::distinct()->get(array('list_name'))->toArray();
 
+        $generatedHtml = new App\CustomClass\HtmlGenerator();
+        $html2 = $generatedHtml->htmlFromDatabaseFor_listout_RouteInArticleController($getListNames);
+
+    return $html2;
+    }
 
 
 
@@ -236,44 +214,69 @@ class ArticleController extends Controller
     public function uploadFile()
     {
 
-        $uploadedFile = Input::file('csvfile');
-        $fileUploadPath = 'uploads/csv/';
-        $tempUploadedFileName = 'tmp.csv';
+
+        if(Request::isMethod('post')) {
+
+            $uploadedFile = Input::file('csvfile');
+            $fileUploadPath = 'uploads/csv/';
+            $tempUploadedFileName = 'tmp.csv';
 
 
-        if ($uploadedFile->isValid() &&
-            ($uploadedFile->getClientOriginalExtension() == 'CSV' ||
-                $uploadedFile->getClientOriginalExtension() == 'csv')
-        ) {
+            if ($uploadedFile->isValid() &&
+                ($uploadedFile->getClientOriginalExtension() == 'CSV' ||
+                    $uploadedFile->getClientOriginalExtension() == 'csv')
+            ) {
 
 
-            $uploadedFile->move($fileUploadPath, $tempUploadedFileName);
+                $uploadedFile->move($fileUploadPath, $tempUploadedFileName);
 
 
-            $fileInfo['extension'] = $uploadedFile->getClientOriginalExtension();
-            $fileInfo['name'] = $uploadedFile->getFilename();
-            $fileInfo['size'] = $uploadedFile->getClientSize();
-            $fileInfo['path'] = $uploadedFile;
+                $fullPath = $fileUploadPath . $tempUploadedFileName;
+
+                $csvReader = Reader::createFromPath($fullPath);
+                $getAllData = $csvReader->fetchAll();
 
 
-//            echo 'Title :'.$allInput.'\n';
-
-            $fullPath = $fileUploadPath . $tempUploadedFileName;
-            $csvReader = Reader::createFromPath($fullPath);
-            $getAllData = $csvReader->fetchAll();
+                $databaseHelper = new App\CustomClass\DatabaseHelper();
+                $getHtmlFromGenerator = new App\CustomClass\HtmlGenerator();
 
 
-            $databaseHelper = new App\CustomClass\DatabaseHelper();
-
-            $databaseHelper->saveCSVToHtml($getAllData);
-            $html5 = $databaseHelper->htmlFromDatabase();
+                $databaseHelper->saveCSVToDatabase($getAllData);
 
 
-            return view('articles.show_csv_options')->with('allCsvData', $html5);
+
+                $html5 = $getHtmlFromGenerator->htmlFromDatabaseForDataTab();
+
+                return view('articles.show_data')->with('allCsvData', $html5);
+            }
         }
 
 
+
+        $html5 = $this->showOldDataList();
+        return view('articles.show_data')->with('allCsvData', $html5);
+
+
     }
+
+
+    public function showOldDataList()
+    {
+        $fileUploadPath = 'uploads/csv/';
+        $tempUploadedFileName = 'tmp.csv';
+        $fullPath = $fileUploadPath . $tempUploadedFileName;
+
+        $getHtmlFromGenerator = new App\CustomClass\HtmlGenerator();
+
+
+        $html5 = $getHtmlFromGenerator->htmlFromDatabaseForDataTab();
+
+        return $html5;
+    }
+
+
+
+    
 
 
     public function showOnlyList()
@@ -282,19 +285,21 @@ class ArticleController extends Controller
 
         $getListNames =App\ProcessList::distinct()->get(array('list_name'))->toArray();
 
+        $generatedHtml = new App\CustomClass\HtmlGenerator();
+        $html2 = $generatedHtml->htmlFromDatabaseFor_showOnlyList_RouteInArticleController($getListNames);
 
-        $html2 = "<ul>";
 
-        foreach ($getListNames as $listName) {
-            $html2 .= "<li>" . $listName['list_name'] . "</li>";
-        }
-
-        $html2 .= "</ul>";
 
 
         return view('articles.showList')->with('html2' , $html2);
 
     }
+
+
+
+
+
+
 
 
 }

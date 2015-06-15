@@ -5,10 +5,16 @@
 
 
     <a href="{{ URL::action('ArticleController@create') }}">
-        <div name="button-import" id="button-import"> Import </div></a>
-    <div name="button-data" id="button-data" style="background-color: #00b3ee"> Data </div>
-    <div name="button-list" id="button-list" > List </div>
+        <div name="button-import" id="button-import"> Import </div>
+    </a>
 
+
+    <div name="button-data" id="button-data" style="background-color: #00b3ee"> Data </div>
+
+
+    <a href="{{ URL::action('ArticleController@showOnlyList') }}">
+        <div name="button-list" id="button-list"> List </div>
+    </a>
 
 @endsection
 

@@ -7,10 +7,17 @@
 
 
     <a href="{{ URL::action('ArticleController@create') }}">
-        <div name="button-import" id="button-import"> Import </div></a>
-    <div name="button-data" id="button-data" > Data </div>
-    <div name="button-list" id="button-list">  </div>
+        <div name="button-import" id="button-import" style="background-color: #00b3ee"> Import </div>
+    </a>
 
+
+    <a href="{{ URL::action('ArticleController@uploadFile') }}">
+        <div name="button-data" id="button-data" > Data </div>
+    </a>
+
+    <a href="{{ URL::action('ArticleController@showOnlyList') }}">
+        <div name="button-list" id="button-list"> List </div>
+    </a>
 
 @endsection
 

@@ -14,7 +14,7 @@ use App;
 
 
 class DatabaseHelper{
-    public function saveCSVToHtml($getAllData)
+    public function saveCSVToDatabase($getAllData)
     {
 
 
@@ -103,58 +103,6 @@ class DatabaseHelper{
     }
 
 
-    public function htmlFromDatabase()
-    {
-
-        $html5 = "<ul>";
-        $inputCheckBoxName = 0;
-
-        $industryCol = App\CsvValue::select('industry_name')->distinct()->get()->toArray();
-
-        foreach ($industryCol as $industry) {
-
-            $tradeCol = App\CsvValue::select('trade_name')
-                ->where('industry_name', $industry['industry_name'])->distinct()->get()->toArray();
-
-
-            $html5 .= "<li><a href='#div-right-descriptio'>" . $industry['industry_name'] . "</a><ul>";
-
-            foreach ($tradeCol as $trade) {
-                $processCol = App\CsvValue::select('process_name')
-                    ->where('industry_name', $industry['industry_name'])
-                    ->where('trade_name', $trade['trade_name'])
-                    ->distinct()->get()->toArray();
-
-                $html5 .= "<li><a href='#div-right-descriptio'>" . $trade['trade_name'] . "</a><ul>";
-                foreach ($processCol as $process) {
-                    $workCol = App\CsvValue::select('work_activity_name')
-                        ->where('industry_name', $industry['industry_name'])
-                        ->where('trade_name', $trade['trade_name'])
-                        ->where('process_name', $process['process_name'])
-                        ->distinct()->get()->toArray();
-
-                    $html5 .= "<li><a href='#div-right-descriptio'><input name='" . $inputCheckBoxName++ . "_parent' type='checkbox' value='"
-                        . $process['process_name'] . "'>" . $process['process_name'] . "</a><ul>";
-
-                    foreach ($workCol as $work) {
-                        $html5 .= "<li><a href='#div-right-descriptio'><input name='" . $inputCheckBoxName++ . "' type='checkbox' value='"
-                            . $work['work_activity_name'] . "'/>" . $work['work_activity_name'] . "</a></li>";
-                    }
-                    $html5 .= "</ul></li>";
-
-                }
-                $html5 .= "</ul></li>";
-
-
-            }
-            $html5 .= "</ul></li>";
-
-
-        }
-        $html5 .= "</ul>";
-
-        return $html5;
-    }
 
 
     }
